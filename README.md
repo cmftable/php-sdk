@@ -12,7 +12,7 @@
 
 # PHP Development Kit
 <p>
-<!-- <img src="https://app.codeship.com/projects/1b635310-7ea1-0136-6d88-72ae497d28e4/status?branch=master" style="vertical-align:middle" /> -->
+<img src="https://travis-ci.org/cmftable/php-sdk.svg?branch=master" style="vertical-align:middle" />
 <img src="https://img.shields.io/badge/License-MIT-blue.svg" style="vertical-align:middle; margin-right:1rem;" /> 
 <br/><br/>
 </p>
