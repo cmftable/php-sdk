@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true">
+  <testsuites>
+    <testsuite name="Comfortable PHP SDK Test Suite">
+      <directory suffix="Test.php">./tests/Comfortable</directory>
+    </testsuite>
+  </testsuites>
+
+  <filter>
+    <whitelist>
+      <directory suffix=".php">./src/Comfortable/</directory>
+    </whitelist>
+  </filter>
+
+  <php>
+    <env name="CMFT_REPOSITORY" value="test"/>
+    <env name="CMFT_APIKEY" value="LL5RLBQOl5zxnwWVwcZPaGWGafvxLLi3"/>
+  </php>
+</phpunit>
