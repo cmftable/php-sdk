@@ -1,19 +1,15 @@
-<div style="text-align:center;">
-  <img src="https://app.comfortable.io/assets/images/logo-black.svg" width="100" style="display: inline; vertical-align: middle;">
-  <img src="https://images.cmft.io/987150097760522240/987157865917714432/987157865942880256/heart.png" width="50" style="margin-left:1.5rem; margin-right:1.5rem; display:inline; vertical-align:middle;">
-  <img src="https://images.cmft.io/987150097760522240/987153231970963456/987153231991934976/php.png" width="150" style="display:inline; vertical-align:middle;" />
-  <br/><br/><br/>
-  
-  [ ![Comfortable Slack Community](https://img.shields.io/badge/-Join%20Slack%20Community-67c0a1.svg?logo=slack)](https://slack-comfortable.herokuapp.com/)
-
+<p align="center">
+  <img src="https://images.cmft.io/987150097760522240/987268367343820800/987268367356399616/cmft-php-banner.png" />
+  <br/><br/>
+  <a href="https://slack-comfortable.herokuapp.com/"><img src="https://img.shields.io/badge/-Join%20Slack%20Community-67c0a1.svg?logo=slack" style="display:inline-block" /></a>
   <br/>
-</div>
+</p>
 
 
 # PHP Development Kit
 <p>
-<img src="https://travis-ci.org/cmftable/php-sdk.svg?branch=master" style="vertical-align:middle" />
-<img src="https://img.shields.io/badge/License-MIT-blue.svg" style="vertical-align:middle; margin-right:1rem;" /> 
+<img src="https://travis-ci.org/cmftable/php-sdk.svg?branch=master" />
+<img src="https://img.shields.io/badge/License-MIT-blue.svg" /> 
 <br/><br/>
 </p>
 
