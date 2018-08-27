@@ -1,5 +1,6 @@
 {
     "name": "comfortable/php-sdk",
+    "description": "PHP SDK for comfortable.io",
     "scripts": {
         "test": "phpunit --colors=always --testdox tests"
     },
