@@ -5,7 +5,7 @@ namespace Comfortable\Traits;
 trait EmbedAssetsTrait {
   protected $embedAssets = false;
   
-  public function embedAssets(bool $embedAssets = null) {
+  public function embedAssets($embedAssets = null) {
     $this->embedAssets = $embedAssets;
     return $this;
   }
