@@ -8,7 +8,8 @@
 
 # PHP Development Kit
 <p>
-<img src="https://travis-ci.org/cmftable/php-sdk.svg?branch=master" />
+  
+[![Build Status](https://travis-ci.org/cmftable/php-sdk.svg?branch=master)](https://travis-ci.org/cmftable/php-sdk)
 <img src="https://img.shields.io/badge/License-MIT-blue.svg" /> 
 <br/><br/>
 </p>
