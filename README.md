@@ -51,7 +51,7 @@ try {
   exit;
 }
 ```
-Complete documentation, installation instructions, and examples are available [here](docs/).
+Complete documentation, installation instructions, and examples are available [here](https://docs.comfortable.io/sdks/php/installation).
 
 ## Tests
  1. Composer is a prerequisite for running the tests. Install composer globally, then run composer install to install required files.
