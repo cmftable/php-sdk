@@ -8,10 +8,18 @@ use PHPUnit\Framework\TestCase;
 class ApiTest extends TestCase {
   protected $apiKey;
   protected $repository;
+  protected $documentId;
+  protected $documentAlias;
+  protected $assetId;
+  protected $collectionApiId;
 
   protected function setUp() {
     $this->apiKey = $_ENV['CMFT_APIKEY'];
     $this->repository = $_ENV['CMFT_REPOSITORY'];
+    $this->documentId = $_ENV['CMFT_DOCUMENT_ID'];
+    $this->documentAlias = $_ENV['CMFT_DOCUMENT_ALIAS'];
+    $this->assetId = $_ENV['CMFT_ASSET_ID'];
+    $this->collectionApiId = $_ENV['CMFT_COLLECTION_APIID'];
   }
 
   public function testMissingApiKey() {
@@ -190,7 +198,7 @@ class ApiTest extends TestCase {
 
   public function testQueryBuilderGetCollection() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
-    $results = $api->query('collection', 'post')->execute();
+    $results = $api->query('collection', $this->collectionApiId)->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
@@ -206,7 +214,7 @@ class ApiTest extends TestCase {
 
   public function testGetDocument() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
-    $results = $api->getDocument('982513777712959488')->execute();
+    $results = $api->getDocument($this->documentId)->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertInstanceOf(\stdClass::class, $results->fields);
     $this->assertInstanceOf(\stdClass::class, $results->meta);
@@ -214,21 +222,30 @@ class ApiTest extends TestCase {
 
   public function testGetDocumentWithSpecificFields() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
-    $results = $api->getDocument('982513777712959488')->fields('fields(title)')->execute();
+    $results = $api->getDocument($this->documentId)->fields('fields(title)')->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertInstanceOf(\stdClass::class, $results->fields);
   }
 
   public function testGetDocumentWithEmbeddedAssets() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
-    $results = $api->getDocument('982513777712959488')->embedAssets(true)->execute();
+    $results = $api->getDocument($this->documentId)->embedAssets(true)->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertInternalType('string', $results->fields->images[0]->fields->title);
   }
 
   public function testGetAlias() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
-    $results = $api->getAlias('legalNotice')->execute();
+    $results = $api->getAlias($this->documentAlias)->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertInstanceOf(\stdClass::class, $results->fields);
+    $this->assertInstanceOf(\stdClass::class, $results->meta);
+  }
+
+  public function testGetAsset() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getAsset($this->assetId)->execute();
+    var_dump($results);
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertInstanceOf(\stdClass::class, $results->fields);
     $this->assertInstanceOf(\stdClass::class, $results->meta);
