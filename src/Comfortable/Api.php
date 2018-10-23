@@ -20,11 +20,6 @@ use GuzzleHttp\Promise;
  */
 class Api {
   /**
-   * sdk version number
-   */
-  const VERSION = "1.0.0";
-
-  /**
    * v1 api endpoint
    */
   const API_ENDPOINT = "https://api.cmft.io/v1/";
