@@ -14,12 +14,12 @@ class ApiTest extends TestCase {
   protected $collectionApiId;
 
   protected function setUp() {
-    $this->apiKey = $_ENV['CMFT_APIKEY'];
-    $this->repository = $_ENV['CMFT_REPOSITORY'];
-    $this->documentId = $_ENV['CMFT_DOCUMENT_ID'];
-    $this->documentAlias = $_ENV['CMFT_DOCUMENT_ALIAS'];
-    $this->assetId = $_ENV['CMFT_ASSET_ID'];
-    $this->collectionApiId = $_ENV['CMFT_COLLECTION_APIID'];
+    $this->apiKey = getenv('CMFT_APIKEY');
+    $this->repository = getenv('CMFT_REPOSITORY');
+    $this->documentId = getenv('CMFT_DOCUMENT_ID');
+    $this->documentAlias = getenv('CMFT_DOCUMENT_ALIAS');
+    $this->assetId = getenv('CMFT_ASSET_ID');
+    $this->collectionApiId = getenv('CMFT_COLLECTION_APIID');
   }
 
   public function testMissingApiKey() {
@@ -245,7 +245,6 @@ class ApiTest extends TestCase {
   public function testGetAsset() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
     $results = $api->getAsset($this->assetId)->execute();
-    var_dump($results);
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertInstanceOf(\stdClass::class, $results->fields);
     $this->assertInstanceOf(\stdClass::class, $results->meta);
