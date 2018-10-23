@@ -12,18 +12,13 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 
 /**
- * 
+ *
  * Fetch data from Comfortable.io
- * 
+ *
  * Usage:
  *  Comfortable\Api::connect(<repositoryId>, <apiKey>);
  */
 class Api {
-  /**
-   * sdk version number
-   */
-  const VERSION = "1.0.0";
-  
   /**
    * v1 api endpoint
    */
@@ -67,10 +62,10 @@ class Api {
   private function __construct($repository, $apiKey = null, Client $httpClient = null) {
     $this->repository = $repository;
     $this->apiKey = $apiKey;
-    $this->httpClient = is_null($httpClient) ? new Client(['headers' => ['Authorization' => $apiKey]]) : $httpClient; 
+    $this->httpClient = is_null($httpClient) ? new Client(['headers' => ['Authorization' => $apiKey]]) : $httpClient;
     $this->url = join([self::API_ENDPOINT, $repository, '/']);
   }
-  
+
   /**
    * chose repository
    *
@@ -86,7 +81,7 @@ class Api {
 
     $httpClient = is_null($httpClient) ? new Client(['headers' => ['Authorization' => $apiKey]]) : $httpClient;
     $url = join([self::API_ENDPOINT, $repository, '/']);
-    
+
     try {
       $response = $httpClient->get($url);
     } catch(RequestException $e) {
@@ -94,7 +89,7 @@ class Api {
         $responseBody = $e->getResponse()->getBody();
         $responseBody = json_decode($responseBody);
         $error;
-        
+
         switch($e->getResponse()->getStatusCode()){
           case 403:
           case 401:
@@ -107,7 +102,7 @@ class Api {
         throw new \RuntimeException($error);
       }
     }
- 
+
     $api = new Api($repository, $apiKey, $httpClient);
     return $api;
   }
@@ -122,7 +117,7 @@ class Api {
   }
 
   /**
-   * get base endpoint of the repository 
+   * get base endpoint of the repository
    *
    * @return void
    */
@@ -132,9 +127,9 @@ class Api {
 
   /**
    * Query all documents
-   * 
+   *
    * perform query against all documents
-   * 
+   *
    * @return void
    */
   public function getDocuments() {
@@ -149,6 +144,16 @@ class Api {
    */
   public function getDocument($id = null) {
     return $this->query('document', $id);
+  }
+
+  /**
+   * Get single asset
+   *
+   * @param string $id
+   * @return void
+   */
+  public function getAsset($id = null) {
+    return $this->query('asset', $id);
   }
 
   /**
@@ -184,6 +189,9 @@ class Api {
         break;
       case "document":
         return new QueryDocument($entityId, $this->repository, $this->httpClient);
+        break;
+      case "asset":
+        return new QueryAsset($entityId, $this->repository, $this->httpClient);
         break;
       case "alias":
         return new QueryAlias($entityId, $this->repository, $this->httpClient);
