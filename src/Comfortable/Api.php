@@ -59,7 +59,7 @@ class Api {
    * @param string $apiKey
    * @param Client $httpClient
    */
-  private function __construct($repository, $apiKey = null, Client $httpClient = null) {
+  public function __construct($repository, $apiKey = null, Client $httpClient = null) {
     $this->repository = $repository;
     $this->apiKey = $apiKey;
     $this->httpClient = is_null($httpClient) ? new Client(['headers' => ['Authorization' => $apiKey]]) : $httpClient;
