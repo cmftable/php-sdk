@@ -68,7 +68,7 @@ class ApiTest extends TestCase {
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
-    $this->assertEquals(sizeof($results->data), $testValue);
+    $this->assertEquals(sizeof((array)$results->data), $testValue);
     $resultLimit = $results->meta->limit;
     $this->assertEquals($resultLimit, $testValue, "invalid limit. Expected: $testValue, given: $resultLimit");
   }
@@ -110,7 +110,7 @@ class ApiTest extends TestCase {
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
-    if (sizeof($results->data) > 0) {
+    if (sizeof((array)$results->data) > 0) {
       $this->assertGreaterThan($testValue, $results->data[0]->meta->id);
     }
   }
@@ -129,7 +129,7 @@ class ApiTest extends TestCase {
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
     $this->assertInstanceOf(\stdClass::class, $results->includes, 'includes are missing or there are no relations');
-    $this->assertGreaterThanOrEqual(1, sizeof($results->includes), 'there should be at least one related contentType');
+    $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
   }
 
   public function testGetAllDocumentsWithIncludeLevel() {
@@ -143,7 +143,7 @@ class ApiTest extends TestCase {
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
     $this->assertInstanceOf(\stdClass::class, $results->includes, 'includes are missing or there are no relations');
-    $this->assertGreaterThanOrEqual(1, sizeof($results->includes), 'there should be at least one related contentType');
+    $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
   }
 
   public function testGetAllDocumentsWithSearch() {
@@ -193,7 +193,7 @@ class ApiTest extends TestCase {
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
-    $this->assertEquals(sizeof($results->data[0]->fields), 1, 'there should be only one field with apiId title');
+    $this->assertEquals(sizeof((array)$results->data[0]->fields), 1, 'there should be only one field with apiId title');
   }
 
   public function testQueryBuilderGetCollection() {
