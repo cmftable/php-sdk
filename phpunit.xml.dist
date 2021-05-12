@@ -15,12 +15,12 @@
     </whitelist>
   </filter>
 
-  <!-- <php> -->
-    <!-- <env name="CMFT_REPOSITORY" value=""/> -->
-    <!-- <env name="CMFT_APIKEY" value=""/> -->
-    <!-- <env name="CMFT_DOCUMENT_ID" value=""/> -->
-    <!-- <env name="CMFT_DOCUMENT_ALIAS" value=""/> -->
-    <!-- <env name="CMFT_ASSET_ID" value=""/> -->
-    <!-- <env name="CMFT_COLLECTION_APIID" value=""/> -->
-  <!-- </php> -->
+  <php>
+    <env name="CMFT_REPOSITORY" value="test"/>
+    <env name="CMFT_APIKEY" value="LL5RLBQOl5zxnwWVwcZPaGWGafvxLLi3"/>
+    <env name="CMFT_DOCUMENT_ID" value="982513777712959488"/>
+    <env name="CMFT_DOCUMENT_ALIAS" value="legalNotice"/>
+    <env name="CMFT_ASSET_ID" value="982566074363023360"/>
+    <env name="CMFT_COLLECTION_APIID" value="post"/>
+  </php>
 </phpunit>
