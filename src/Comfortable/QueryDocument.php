@@ -15,17 +15,17 @@ class QueryDocument extends AbstractQuery {
   use Traits\EmbedAssetsTrait;
 
   protected $endpoint = 'documents';
-  protected $entityId; 
+  protected $entityId;
 
   public function __construct($entityId, $repository, Client $httpClient = null) {
     $this->entityId = $entityId;
-    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;  
+    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;
     $this->repository = $repository;
   }
 
   public function execute(){
     $queryParameters = [
-      "query" => []
+        "query" => []
     ];
 
     if ($this->getLocale()) {
@@ -54,9 +54,9 @@ class QueryDocument extends AbstractQuery {
     }
     try {
       $response = $this->httpClient->request(
-        'GET',
-        $this->getEndpoint($this->entityId),
-        $queryParameters
+          'GET',
+          $this->getEndpoint($this->entityId),
+          $queryParameters
       );
     } catch(RequestException $e) {
       throw new \RuntimeException($e);
