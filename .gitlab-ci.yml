@@ -1,0 +1,15 @@
+image: php:5.6
+
+before_script:
+  - apt-get update -yqq
+  - apt-get upgrade -y
+  - apt-get install zip unzip -yqq
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php composer-setup.php
+  - php -r "unlink('composer-setup.php');"
+
+# Run tests with PHP5.6
+test:5.6:
+  script:
+    - php composer.phar install
+    - php vendor/bin/phpunit
