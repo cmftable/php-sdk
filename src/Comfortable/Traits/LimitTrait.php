@@ -1,15 +1,19 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Comfortable\Traits;
 
-trait LimitTrait {
-  protected $limit = 25;
+trait LimitTrait
+{
+    protected $limit = 25;
 
-  public function limit($limit = 25) {
-    $this->limit = $limit;
-    return $this;
-  }
+    public function limit($limit = 25)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
 
-  public function getLimit() {
-    return $this->limit;
-  }
+    public function getLimit()
+    {
+        return $this->limit;
+    }
 }

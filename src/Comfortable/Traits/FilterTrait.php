@@ -1,15 +1,22 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Comfortable\Traits;
 
-trait FilterTrait {
-  protected $filter;
+use Comfortable\Filter;
 
-  public function filter(\Comfortable\Filter $filter) {
-    $this->filter = $filter->getFilter();
-    return $this;
-  }
+trait FilterTrait
+{
+    protected array $filter = [];
 
-  public function getFilter() {
-    return $this->filter;
-  }
+    public function filter(Filter $filter): self
+    {
+        $this->filter = $filter->getFilter();
+
+        return $this;
+    }
+
+    public function getFilter(): array
+    {
+        return $this->filter;
+    }
 }

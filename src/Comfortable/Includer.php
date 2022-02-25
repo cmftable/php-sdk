@@ -1,31 +1,20 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Comfortable;
 
-/**
- * Includer
- */
-class Includer {
-  protected $include = [];
+class Includer
+{
+    protected array $include = [];
 
-  /** construct */
-  public function __construct() { }
+    public function add(string $property, string $context = 'fields', string $contentType = '*'): self
+    {
+        $this->include["$contentType.$context.$property"] = 1;
 
-  /**
-   * @param string $property
-   * @param string $context
-   * @param string $contentType
-   * @return void
-   */
-  public function add($property, $context = 'fields', $contentType = '*') {
-    $this->include["$contentType.$context.$property"] = 1;
-    return $this;
-  }
+        return $this;
+    }
 
-  /**
-   * @return void
-   */
-  public function getIncludeByFields() {
-    return $this->include;
-  }
+    public function getIncludeByFields(): array
+    {
+        return $this->include;
+    }
 }
-?>

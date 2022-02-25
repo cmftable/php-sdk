@@ -1,16 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Comfortable\Traits;
 
-trait FieldsTrait {
-  protected $fields;
-  
-  public function fields($fields = null) {
-    $this->fields = $fields;
-    return $this;
-  }
+trait FieldsTrait
+{
+    protected ?string $fields = null;
 
-  public function getFields() {
-    return $this->fields;
-  }
+    public function fields($fields = null): self
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    public function getFields(): ?string
+    {
+        return $this->fields;
+    }
 }

@@ -1,15 +1,21 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Comfortable\Traits;
 
-trait SortingTrait {
-  protected $sorting;
+use Comfortable\Sorting;
 
-  public function sorting(\Comfortable\Sorting $sorting) {
-    $this->sorting = $sorting->getSorting();
-    return $this;
-  }
+trait SortingTrait
+{
+    protected $sorting;
 
-  public function getSorting() {
-    return $this->sorting;
-  }
+    public function sorting(Sorting $sorting)
+    {
+        $this->sorting = $sorting->getSorting();
+        return $this;
+    }
+
+    public function getSorting()
+    {
+        return $this->sorting;
+    }
 }

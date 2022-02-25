@@ -1,16 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Comfortable\Traits;
 
-trait ExcludeTagsTrait {
-  protected $excludeTags;
+trait ExcludeTagsTrait
+{
+    protected array $excludeTags = [];
 
-  public function excludeTags(array $tags) {
-    $this->excludeTags = $tags;
-    return $this;
-  }
+    public function excludeTags(array $tags): self
+    {
+        $this->excludeTags = $tags;
 
-  public function getExcludeTags() {
-    return $this->excludeTags;
-  }
+        return $this;
+    }
+
+    public function getExcludeTags(): array
+    {
+        return $this->excludeTags;
+    }
 }
