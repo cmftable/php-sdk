@@ -1,66 +1,48 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Comfortable;
 
-abstract class AbstractQuery {
-  const API_ENDPOINT = "https://api.cmft.io/v1/";
+use GuzzleHttp\Client;
 
-  /**
-   * @var string
-   */
-  protected $repository;
+abstract class AbstractQuery
+{
+    public const API_ENDPOINT = "https://api.cmft.io/v1/";
+    protected string $repository;
+    protected Client $httpClient;
+    protected string $endpoint;
+    protected array $query = [];
 
-  /**
-   * @var Client
-   */
-  protected $httpClient;
+    /**
+     * get Endpoint of specific resource
+     */
+    public function getEndpoint(string $entityId = null): string
+    {
+        $urlArray = [self::API_ENDPOINT, $this->repository, '/', $this->endpoint, '/'];
 
-  /**
-   * @var string
-   */
-  protected $endpoint;
+        if ($entityId) {
+            $urlArray[] = "$entityId/";
+        }
 
-  /**
-   * @var array
-   */
-  protected $query = [];
-
-  /**
-   * get Endpoint of specific resource
-   *
-   * @param string $type
-   * @param string $entityId
-   * @return string
-   */
-  public function getEndpoint($entityId = null) {
-    $urlArray = [self::API_ENDPOINT, $this->repository, '/', $this->endpoint, '/'];
-
-    if ($entityId) {
-      array_push($urlArray, "$entityId/");
+        return implode($urlArray);
     }
 
-    return join($urlArray);
-  }
+    /**
+     * return json encoded query
+     * @return bool|string
+     * @throws \JsonException
+     */
+    public function toJson()
+    {
+        return json_encode($this->query, JSON_THROW_ON_ERROR);
+    }
 
-  /**
-   * return json encoded query
-   *
-   * @return void
-   */
-  public function toJson() {
-    return json_encode($this->query);
-  }
+    /**
+     * return query object
+     */
+    public function getQuery(): array
+    {
+        return $this->query;
+    }
 
-  /**
-   * return query object
-   *
-   * @return void
-   */
-  public function getQuery() {
-    return $this->query;
-  }
-
-  /** abstract */
-  abstract public function execute();  
+    abstract public function execute();
 }
-?>

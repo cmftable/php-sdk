@@ -1,15 +1,19 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Comfortable\Traits;
 
-trait IncludeTagsTrait {
-  protected $includeTags;
+trait IncludeTagsTrait
+{
+    protected array $includeTags = [];
 
-  public function includeTags(array $tags) {
-    $this->includeTags = $tags;
-    return $this;
-  }
+    public function includeTags(array $tags): self
+    {
+        $this->includeTags = $tags;
+        return $this;
+    }
 
-  public function getIncludeTags() {
-    return $this->includeTags;
-  }
+    public function getIncludeTags(): array
+    {
+        return $this->includeTags;
+    }
 }

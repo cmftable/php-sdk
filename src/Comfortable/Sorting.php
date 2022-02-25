@@ -1,35 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Comfortable;
 
-class Sorting {
-  
-  /**
-   * @var array
-   */
-  private $sorting = [];
+class Sorting
+{
+    private array $sorting = [];
 
-  /** construct */
-  public function __construct() { }
+    public function add(string $property, string $direction = 'ASC', string $context = 'fields'): self
+    {
+        $direction = (strtolower($direction) === "asc" || strtolower($direction) === "desc") ? strtolower($direction) : 'ASC';
+        $this->sorting["$context.$property"] = $direction;
 
-  /**
-   * @param string $property
-   * @param string $direction
-   * @param string $context
-   * @return void
-   */
-  public function add($property, $direction = 'ASC', $context = 'fields') {
-    $direction = (strtolower($direction) === "asc" || strtolower($direction) === "desc") ? strtolower($direction) : 'ASC';
-    $this->sorting["{$context}.{$property}"] = $direction;
+        return $this;
+    }
 
-    return $this;
-  }
-
-  /**
-   * @return void
-   */
-  public function getSorting(){
-    return $this->sorting;
-  }
+    public function getSorting(): array
+    {
+        return $this->sorting;
+    }
 }
-?>

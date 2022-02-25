@@ -1,25 +1,35 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Comfortable\Traits;
 
-trait IncludeTrait {
-  protected $include;
-  protected $includeLevel;
+use Comfortable\Includer;
 
-  public function includeByFields(\Comfortable\Includer $include) {
-    $this->include = $include->getIncludeByFields();
-    return $this;
-  }
+trait IncludeTrait
+{
+    protected array $include = [];
+    protected ?int $includeLevel = null;
 
-  public function getIncludeByFields() {
-    return $this->include;
-  }
+    public function includeByFields(Includer $include): self
+    {
+        $this->include = $include->getIncludeByFields();
 
-  public function includes($includeLevel = null) {
-    $this->includeLevel = $includeLevel;
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getIncludeLevel() {
-    return $this->includeLevel;
-  }
+    public function includes(?int $includeLevel = null): self
+    {
+        $this->includeLevel = $includeLevel;
+
+        return $this;
+    }
+
+    public function getIncludeByFields(): array
+    {
+        return $this->include;
+    }
+
+    public function getIncludeLevel(): ?int
+    {
+        return $this->includeLevel;
+    }
 }
