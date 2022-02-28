@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait RequestMethodTrait
 {
-    /**
-     * @var string $method
-     */
-    protected $method = 'GET';
+    protected string $method = 'GET';
 
     public function usePostMethod(): self
     {

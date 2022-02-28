@@ -6,14 +6,8 @@ use Comfortable\Includer;
 
 trait IncludeTrait
 {
-    /**
-     * @var array $include
-     */
-    protected $include = [];
-    /**
-     * @var int|null $includeLevel
-     */
-    protected $includeLevel;
+    protected array $include = [];
+    protected ?int $includeLevel = null;
 
     public function includeByFields(Includer $include): self
     {

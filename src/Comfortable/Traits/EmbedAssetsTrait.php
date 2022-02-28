@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait EmbedAssetsTrait
 {
-    /**
-     * @var bool $embedAssets
-     */
-    protected $embedAssets = false;
+    protected ?bool $embedAssets = false;
 
     public function embedAssets(?bool $embedAssets = null): self
     {

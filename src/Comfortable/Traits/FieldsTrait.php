@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait FieldsTrait
 {
-    /**
-     * @var string|null $fields
-     */
-    protected $fields;
+    protected ?string $fields = null;
 
     public function fields(?string $fields = null): self
     {

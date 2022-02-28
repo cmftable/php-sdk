@@ -4,10 +4,7 @@ namespace Comfortable;
 
 class Filter
 {
-    /**
-     * @var array $filter
-     */
-    protected $filter = [];
+    protected array $filter = [];
 
     /**
      * add a logical 'and' filter

@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait OffsetTrait
 {
-    /**
-     * @var int|null $offset
-     */
-    protected $offset = 0;
+    protected ?int $offset = 0;
 
     public function offset(?int $offset = null): self
     {
