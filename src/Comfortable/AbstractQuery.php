@@ -47,5 +47,5 @@ abstract class AbstractQuery
         return $this->query;
     }
 
-    abstract public function execute();
+    abstract public function execute(): mixed;
 }
