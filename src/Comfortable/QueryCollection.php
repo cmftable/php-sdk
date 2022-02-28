@@ -2,23 +2,36 @@
 
 namespace Comfortable;
 
+use Comfortable\Traits\EmbedAssetsTrait;
+use Comfortable\Traits\ExcludeTagsTrait;
+use Comfortable\Traits\FieldsTrait;
+use Comfortable\Traits\FilterTrait;
+use Comfortable\Traits\IncludeTagsTrait;
+use Comfortable\Traits\IncludeTrait;
+use Comfortable\Traits\LimitTrait;
+use Comfortable\Traits\LocaleTrait;
+use Comfortable\Traits\OffsetTrait;
+use Comfortable\Traits\RequestMethodTrait;
+use Comfortable\Traits\SearchTrait;
+use Comfortable\Traits\SortingTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use RuntimeException;
 
 class QueryCollection extends AbstractQuery
 {
-    use Traits\LocaleTrait;
-    use Traits\LimitTrait;
-    use Traits\OffsetTrait;
-    use Traits\SortingTrait;
-    use Traits\FilterTrait;
-    use Traits\IncludeTrait;
-    use Traits\SearchTrait;
-    use Traits\IncludeTagsTrait;
-    use Traits\ExcludeTagsTrait;
-    use Traits\FieldsTrait;
-    use Traits\EmbedAssetsTrait;
+    use LocaleTrait;
+    use LimitTrait;
+    use OffsetTrait;
+    use SortingTrait;
+    use FilterTrait;
+    use IncludeTrait;
+    use SearchTrait;
+    use IncludeTagsTrait;
+    use ExcludeTagsTrait;
+    use FieldsTrait;
+    use EmbedAssetsTrait;
+    use RequestMethodTrait;
 
     /**
      * @var string $endpoint
