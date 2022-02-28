@@ -2,16 +2,20 @@
 
 namespace Comfortable;
 
+use Comfortable\Traits\EmbedAssetsTrait;
+use Comfortable\Traits\FieldsTrait;
+use Comfortable\Traits\IncludeTrait;
+use Comfortable\Traits\LocaleTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use RuntimeException;
 
 class QueryDocument extends AbstractQuery
 {
-    use Traits\LocaleTrait;
-    use Traits\IncludeTrait;
-    use Traits\FieldsTrait;
-    use Traits\EmbedAssetsTrait;
+    use LocaleTrait;
+    use IncludeTrait;
+    use FieldsTrait;
+    use EmbedAssetsTrait;
 
     /**
      * @var string $endpoint

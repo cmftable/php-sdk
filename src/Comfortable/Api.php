@@ -52,7 +52,7 @@ class Api
         $this->httpClient = is_null($httpClient)
             ? new Client(['headers' => ['Authorization' => $apiKey]])
             : $httpClient;
-        $this->url = join([self::API_ENDPOINT, $repository, '/']);
+        $this->url = implode([self::API_ENDPOINT, $repository, '/']);
     }
 
     /**
