@@ -11,8 +11,14 @@ class QueryAsset extends AbstractQuery
     use Traits\LocaleTrait;
     use Traits\FieldsTrait;
 
-    protected string $endpoint = 'assets';
-    protected ?string $entityId = null;
+    /**
+     * @var string $endpoint
+     */
+    protected $endpoint = 'assets';
+    /**
+     * @var string|null $entityId
+     */
+    protected $entityId;
 
     public function __construct($entityId, $repository, Client $httpClient = null)
     {
@@ -23,7 +29,6 @@ class QueryAsset extends AbstractQuery
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \JsonException
      */
     public function execute()
     {
@@ -40,7 +45,7 @@ class QueryAsset extends AbstractQuery
         }
 
         if (count($this->query) > 0) {
-            $query = json_encode($this->query, JSON_THROW_ON_ERROR);
+            $query = json_encode($this->query);
             $queryParameters["query"]["query"] = $query;
         }
         try {
@@ -53,6 +58,6 @@ class QueryAsset extends AbstractQuery
             throw new RuntimeException($e->getMessage());
         }
 
-        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($response->getBody()->getContents(), false);
     }
 }

@@ -4,7 +4,10 @@ namespace Comfortable\Traits;
 
 trait ExcludeTagsTrait
 {
-    protected array $excludeTags = [];
+    /**
+     * @var array $excludeTags
+     */
+    protected $excludeTags = [];
 
     public function excludeTags(array $tags): self
     {

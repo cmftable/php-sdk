@@ -4,7 +4,10 @@ namespace Comfortable;
 
 class Includer
 {
-    protected array $include = [];
+    /**
+     * @var array $include
+     */
+    protected $include = [];
 
     public function add(string $property, string $context = 'fields', string $contentType = '*'): self
     {

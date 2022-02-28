@@ -18,33 +18,40 @@ class Api
     /**
      * v1 api endpoint
      */
-    public const API_ENDPOINT = "https://api.cmft.io/v1/";
+    const API_ENDPOINT = "https://api.cmft.io/v1/";
 
     /**
      * comfortable repositoryId
+     *
+     * @var string
      */
-    protected string $repository;
-
+    protected $repository;
     /**
      * Api key which is used to call the api
+     *
+     * @var string|null
      */
-    protected ?string $apiKey;
-
+    protected $apiKey;
     /**
      * http client
+     *
+     * @var \GuzzleHttp\Client
      */
-    protected Client $httpClient;
-
+    protected $httpClient;
     /**
      * repository base endpoint
+     *
+     * @var string $url
      */
-    protected string $url;
+    protected $url;
 
     public function __construct(string $repository, string $apiKey = null, Client $httpClient = null)
     {
         $this->repository = $repository;
         $this->apiKey = $apiKey;
-        $this->httpClient = is_null($httpClient) ? new Client(['headers' => ['Authorization' => $apiKey]]) : $httpClient;
+        $this->httpClient = is_null($httpClient)
+            ? new Client(['headers' => ['Authorization' => $apiKey]])
+            : $httpClient;
         $this->url = join([self::API_ENDPOINT, $repository, '/']);
     }
 
@@ -65,7 +72,7 @@ class Api
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 $responseBody = $e->getResponse()->getBody();
-                $responseBody = json_decode((string)$responseBody, false, 512, JSON_THROW_ON_ERROR);
+                $responseBody = json_decode((string)$responseBody, false);
 
                 switch ($e->getResponse()->getStatusCode()) {
                     case 403:
@@ -114,9 +121,12 @@ class Api
     /**
      * custom query
      *
+     * @param string|null $resource
+     * @param string|null $entityId
+     *
      * @throws \Exception
      */
-    public function query(?string $resource = null, ?string $entityId = null): AbstractQuery
+    public function query(string $resource = null, string $entityId = null): AbstractQuery
     {
         switch ($resource) {
             case 'documents':
@@ -144,6 +154,8 @@ class Api
     /**
      * Get single document
      *
+     * @param string|null $id
+     *
      * @throws \Exception
      */
     public function getDocument(string $id = null): AbstractQuery
@@ -153,6 +165,8 @@ class Api
 
     /**
      * Get single asset
+     *
+     * @param string|null $id
      *
      * @throws \Exception
      */
@@ -164,6 +178,8 @@ class Api
     /**
      * Get document behind alias
      *
+     * @param string|null $apiId
+     *
      * @throws \Exception
      */
     public function getAlias(string $apiId = null): AbstractQuery
@@ -174,9 +190,11 @@ class Api
     /**
      * Query collection documents
      *
+     * @param string|null $apiId
+     *
      * @throws \Exception
      */
-    public function getCollection(?string $apiId = null): AbstractQuery
+    public function getCollection(string $apiId = null): AbstractQuery
     {
         return $this->query('collection', $apiId);
     }

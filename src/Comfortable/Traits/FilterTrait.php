@@ -6,7 +6,10 @@ use Comfortable\Filter;
 
 trait FilterTrait
 {
-    protected array $filter = [];
+    /**
+     * @var array $filter
+     */
+    protected $filter = [];
 
     public function filter(Filter $filter): self
     {

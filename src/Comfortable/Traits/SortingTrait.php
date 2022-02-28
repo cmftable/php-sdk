@@ -6,11 +6,15 @@ use Comfortable\Sorting;
 
 trait SortingTrait
 {
+    /**
+     * @var array|null $sorting
+     */
     protected $sorting;
 
-    public function sorting(Sorting $sorting)
+    public function sorting(Sorting $sorting):self
     {
         $this->sorting = $sorting->getSorting();
+
         return $this;
     }
 

@@ -20,8 +20,14 @@ class QueryCollection extends AbstractQuery
     use Traits\FieldsTrait;
     use Traits\EmbedAssetsTrait;
 
-    protected string $endpoint = 'collections';
-    protected ?string $entityId = null;
+    /**
+     * @var string $endpoint
+     */
+    protected $endpoint = 'collections';
+    /**
+     * @var string|null $entityId
+     */
+    protected $entityId;
 
     public function __construct($entityId, $repository, Client $httpClient = null)
     {
@@ -32,7 +38,6 @@ class QueryCollection extends AbstractQuery
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \JsonException
      */
     public function execute()
     {
@@ -89,7 +94,7 @@ class QueryCollection extends AbstractQuery
         }
 
         if (count($this->query) > 0) {
-            $query = json_encode($this->query, JSON_THROW_ON_ERROR);
+            $query = json_encode($this->query);
             $queryParameters["query"]["query"] = $query;
         }
 
@@ -103,6 +108,6 @@ class QueryCollection extends AbstractQuery
             throw new RuntimeException($e->getMessage());
         }
 
-        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($response->getBody()->getContents(), false);
     }
 }

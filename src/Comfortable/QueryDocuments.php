@@ -20,7 +20,10 @@ class QueryDocuments extends AbstractQuery
     use Traits\FieldsTrait;
     use Traits\EmbedAssetsTrait;
 
-    protected string $endpoint = 'documents';
+    /**
+     * @var string $endpoint
+     */
+    protected $endpoint = 'documents';
 
     public function __construct($repository, Client $httpClient = null)
     {
@@ -30,7 +33,6 @@ class QueryDocuments extends AbstractQuery
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \JsonException
      */
     public function execute()
     {
@@ -87,7 +89,7 @@ class QueryDocuments extends AbstractQuery
         }
 
         if (count($this->query) > 0) {
-            $query = json_encode($this->query, JSON_THROW_ON_ERROR);
+            $query = json_encode($this->query);
             $queryParameters["query"]["query"] = $query;
         }
 
@@ -101,6 +103,6 @@ class QueryDocuments extends AbstractQuery
             throw new RuntimeException($e->getMessage());
         }
 
-        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($response->getBody()->getContents(), false);
     }
 }
