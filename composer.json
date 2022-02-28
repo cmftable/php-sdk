@@ -12,7 +12,7 @@
     "test": "phpunit --colors=always --testdox tests"
   },
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "ext-curl": "*",
     "ext-json": "*",
     "guzzlehttp/guzzle": "^7.0"
