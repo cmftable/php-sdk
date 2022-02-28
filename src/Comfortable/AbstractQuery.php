@@ -2,15 +2,26 @@
 
 namespace Comfortable;
 
-use GuzzleHttp\Client;
-
 abstract class AbstractQuery
 {
-    public const API_ENDPOINT = "https://api.cmft.io/v1/";
-    protected string $repository;
-    protected Client $httpClient;
-    protected string $endpoint;
-    protected array $query = [];
+    const API_ENDPOINT = "https://api.cmft.io/v1/";
+
+    /**
+     * @var string $repository
+     */
+    protected $repository;
+    /**
+     * @var \GuzzleHttp\Client $httpClient
+     */
+    protected $httpClient;
+    /**
+     * @var string $endpoint
+     */
+    protected $endpoint;
+    /**
+     * @var array $query
+     */
+    protected $query = [];
 
     /**
      * get Endpoint of specific resource
@@ -28,12 +39,12 @@ abstract class AbstractQuery
 
     /**
      * return json encoded query
+     *
      * @return bool|string
-     * @throws \JsonException
      */
     public function toJson()
     {
-        return json_encode($this->query, JSON_THROW_ON_ERROR);
+        return json_encode($this->query);
     }
 
     /**

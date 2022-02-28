@@ -4,11 +4,15 @@ namespace Comfortable\Traits;
 
 trait SearchTrait
 {
+    /**
+     * @var string|null $search
+     */
     protected $search;
 
-    public function search($search = null)
+    public function search($search = null): self
     {
         $this->search = $search;
+
         return $this;
     }
 

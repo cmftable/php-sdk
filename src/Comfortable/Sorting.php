@@ -4,11 +4,16 @@ namespace Comfortable;
 
 class Sorting
 {
-    private array $sorting = [];
+    /**
+     * @var array $sorting
+     */
+    private $sorting = [];
 
     public function add(string $property, string $direction = 'ASC', string $context = 'fields'): self
     {
-        $direction = (strtolower($direction) === "asc" || strtolower($direction) === "desc") ? strtolower($direction) : 'ASC';
+        $direction = (strtolower($direction) === "asc" || strtolower($direction) === "desc")
+            ? strtolower($direction)
+            : 'ASC';
         $this->sorting["$context.$property"] = $direction;
 
         return $this;

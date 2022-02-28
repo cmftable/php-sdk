@@ -6,8 +6,14 @@ use Comfortable\Includer;
 
 trait IncludeTrait
 {
-    protected array $include = [];
-    protected ?int $includeLevel = null;
+    /**
+     * @var array $include
+     */
+    protected $include = [];
+    /**
+     * @var int|null $includeLevel
+     */
+    protected $includeLevel;
 
     public function includeByFields(Includer $include): self
     {
@@ -16,7 +22,7 @@ trait IncludeTrait
         return $this;
     }
 
-    public function includes(?int $includeLevel = null): self
+    public function includes(int $includeLevel = null): self
     {
         $this->includeLevel = $includeLevel;
 
@@ -28,7 +34,7 @@ trait IncludeTrait
         return $this->include;
     }
 
-    public function getIncludeLevel(): ?int
+    public function getIncludeLevel()
     {
         return $this->includeLevel;
     }

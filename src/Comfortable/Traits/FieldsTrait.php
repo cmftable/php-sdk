@@ -4,7 +4,10 @@ namespace Comfortable\Traits;
 
 trait FieldsTrait
 {
-    protected ?string $fields = null;
+    /**
+     * @var string|null $fields
+     */
+    protected $fields;
 
     public function fields($fields = null): self
     {
@@ -13,7 +16,7 @@ trait FieldsTrait
         return $this;
     }
 
-    public function getFields(): ?string
+    public function getFields()
     {
         return $this->fields;
     }

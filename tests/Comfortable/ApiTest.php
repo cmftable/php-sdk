@@ -16,7 +16,7 @@ class ApiTest extends TestCase
     protected $assetId;
     protected $collectionApiId;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->apiKey = getenv('CMFT_APIKEY');
         $this->repository = getenv('CMFT_REPOSITORY');
@@ -26,18 +26,17 @@ class ApiTest extends TestCase
         $this->collectionApiId = getenv('CMFT_COLLECTION_APIID');
     }
 
-    public function testMissingApiKey(): void
+    public function testMissingApiKey()
     {
         try {
             Comfortable\Api::connect($this->repository);
         } catch (RuntimeException $e) {
             $this->assertInstanceOf(RuntimeException::class, $e);
             $this->assertEquals('invalid apiKey', $e->getMessage());
-        } catch (\JsonException $e) {
         }
     }
 
-    public function testInvalidApiKeyOrPermission(): void
+    public function testInvalidApiKeyOrPermission()
     {
         try {
             Comfortable\Api::connect($this->repository, 'thisIsAnInvalidTestToken');
@@ -47,7 +46,7 @@ class ApiTest extends TestCase
         }
     }
 
-    public function testValidApiKey(): void
+    public function testValidApiKey()
     {
         $this->assertInstanceOf(
             Comfortable\Api::class,
@@ -55,50 +54,50 @@ class ApiTest extends TestCase
         );
     }
 
-    public function testQueryBuilderExecution(): void
+    public function testQueryBuilderExecution()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->query('documents')->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
     }
 
-    public function testAllDocumentsWrapper(): void
+    public function testAllDocumentsWrapper()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
     }
 
-    public function testGetAllDocumentsWithLimit(): void
+    public function testGetAllDocumentsWithLimit()
     {
         $testValue = 1;
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->limit($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertEquals(count((array)$results->data), $testValue);
         $resultLimit = $results->meta->limit;
         $this->assertEquals($resultLimit, $testValue, "invalid limit. Expected: $testValue, given: $resultLimit");
     }
 
-    public function testGetAllDocumentsWithOffset(): void
+    public function testGetAllDocumentsWithOffset()
     {
         $testValue = 2;
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->offset($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $resultOffset = $results->meta->offset;
         $this->assertEquals($resultOffset, $testValue, "invalid offset. Expected: $testValue, given: $resultOffset");
     }
 
-    public function testGetAllDocumentsWithSorting(): void
+    public function testGetAllDocumentsWithSorting()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()
@@ -108,11 +107,11 @@ class ApiTest extends TestCase
             ->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertGreaterThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
     }
 
-    public function testGetAllDocumentsWithFilter(): void
+    public function testGetAllDocumentsWithFilter()
     {
         $testValue = "100000";
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
@@ -123,13 +122,13 @@ class ApiTest extends TestCase
             ->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         if (sizeof((array)$results->data) > 0) {
             $this->assertGreaterThan($testValue, $results->data[0]->meta->id);
         }
     }
 
-    public function testGetAllDocumentsWithIncludeByFields(): void
+    public function testGetAllDocumentsWithIncludeByFields()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
 
@@ -141,7 +140,7 @@ class ApiTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertInstanceOf(stdClass::class, $results->includes, 'includes are missing or there are no relations');
         $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
     }
@@ -155,69 +154,70 @@ class ApiTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertInstanceOf(stdClass::class, $results->includes, 'includes are missing or there are no relations');
         $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
     }
 
-    public function testGetAllDocumentsWithSearch(): void
+    public function testGetAllDocumentsWithSearch()
     {
         $testValue = "Test";
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->search($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
     }
 
-    public function testGetAllDocumentsWithAllLocales(): void
+    public function testGetAllDocumentsWithAllLocales()
     {
         $testValue = "all";
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->locale($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertInstanceOf(
             stdClass::class, $results->data[0]->fields->title,
             'there has to be a value for multiple languages'
         );
-        $this->assertIsString(
+        $this->assertInternalType(
+            'string',
             $results->data[0]->fields->title->de,
             'there has to be a value for multiple languages'
         );
     }
 
-    public function testGetAllDocumentsWithIncludeTags(): void
+    public function testGetAllDocumentsWithIncludeTags()
     {
         $testValue = ["include"];
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->includeTags($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertContains($testValue[0], $results->data[0]->meta->tags, "must contains $testValue[0]");
     }
 
-    public function testGetAllDocumentsWithExcludeTags(): void
+    public function testGetAllDocumentsWithExcludeTags()
     {
         $testValue = ["exclude"];
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->excludeTags($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertNotContains($testValue[0], $results->data[0]->meta->tags, "must contains $testValue[0]");
     }
 
-    public function testGetAllDocumentsWithSpecificFields(): void
+    public function testGetAllDocumentsWithSpecificFields()
     {
         $testValue = 'fields(title)';
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocuments()->fields($testValue)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
         $this->assertCount(
             1,
             (array)$results->data[0]->fields,
@@ -225,25 +225,25 @@ class ApiTest extends TestCase
         );
     }
 
-    public function testQueryBuilderGetCollection(): void
+    public function testQueryBuilderGetCollection()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->query('collection', $this->collectionApiId)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
     }
 
-    public function testGetCollection(): void
+    public function testGetCollection()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getCollection('post')->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertIsArray($results->data);
+        $this->assertInternalType('array', $results->data);
     }
 
-    public function testGetDocument(): void
+    public function testGetDocument()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocument($this->documentId)->execute();
@@ -252,7 +252,7 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $results->meta);
     }
 
-    public function testGetDocumentWithSpecificFields(): void
+    public function testGetDocumentWithSpecificFields()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocument($this->documentId)->fields('fields(title)')->execute();
@@ -260,15 +260,15 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $results->fields);
     }
 
-    public function testGetDocumentWithEmbeddedAssets(): void
+    public function testGetDocumentWithEmbeddedAssets()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getDocument($this->documentId)->embedAssets(true)->execute();
         $this->assertInstanceOf(stdClass::class, $results);
-        $this->assertIsString($results->fields->images[0]->fields->title);
+        $this->assertInternalType('string', $results->fields->images[0]->fields->title);
     }
 
-    public function testGetAlias(): void
+    public function testGetAlias()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getAlias($this->documentAlias)->execute();
@@ -277,7 +277,7 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $results->meta);
     }
 
-    public function testGetAsset(): void
+    public function testGetAsset()
     {
         $api = Comfortable\Api::connect($this->repository, $this->apiKey);
         $results = $api->getAsset($this->assetId)->execute();
