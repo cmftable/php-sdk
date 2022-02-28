@@ -47,7 +47,7 @@ class QueryCollection extends AbstractQuery
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \JsonException
      */
-    public function execute()
+    public function execute(): mixed
     {
         $queryParameters = [
             "query" => [],
