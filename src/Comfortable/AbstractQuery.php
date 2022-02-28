@@ -61,6 +61,6 @@ abstract class AbstractQuery {
   }
 
   /** abstract */
-  abstract public function execute();  
+  abstract public function execute();
 }
 ?>

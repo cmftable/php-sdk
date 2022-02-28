@@ -61,6 +61,14 @@ class ApiTest extends TestCase {
     $this->assertInternalType('array', $results->data);
   }
 
+  public function testAllDocumentsWrapperUsingPostMethod() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getDocuments()->usePostMethod()->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+  }
+
   public function testGetAllDocumentsWithLimit() {
     $testValue = 1;
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
@@ -73,10 +81,33 @@ class ApiTest extends TestCase {
     $this->assertEquals($resultLimit, $testValue, "invalid limit. Expected: $testValue, given: $resultLimit");
   }
 
+  public function testGetAllDocumentsWithLimitUsingPostMethod() {
+    $testValue = 1;
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getDocuments()->limit($testValue)->usePostMethod()->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+    $this->assertEquals(sizeof((array)$results->data), $testValue);
+    $resultLimit = $results->meta->limit;
+    $this->assertEquals($resultLimit, $testValue, "invalid limit. Expected: $testValue, given: $resultLimit");
+  }
+
   public function testGetAllDocumentsWithOffset() {
     $testValue = 2;
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
     $results = $api->getDocuments()->offset($testValue)->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+    $resultOffset = $results->meta->offset;
+    $this->assertEquals($resultOffset, $testValue, "invalid offset. Expected: $testValue, given: $resultOffset");
+  }
+
+  public function testGetAllDocumentsWithOffsetUsingPostMethod() {
+    $testValue = 2;
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getDocuments()->offset($testValue)->usePostMethod()->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
@@ -98,6 +129,21 @@ class ApiTest extends TestCase {
     $this->assertGreaterThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
   }
 
+  public function testGetAllDocumentsWithSortingUsingPostMethod() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getDocuments()
+      ->sorting(
+        (new Comfortable\Sorting)
+          ->add('id', 'ASC', 'meta')
+      )
+      ->usePostMethod()
+      ->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+    $this->assertGreaterThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
+  }
+
   public function testGetAllDocumentsWithFilter() {
     $testValue = "100000";
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
@@ -106,6 +152,24 @@ class ApiTest extends TestCase {
         (new Comfortable\Filter)
           ->addAnd('id', 'greaterThan', $testValue, 'meta')
       )
+      ->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+    if (sizeof((array)$results->data) > 0) {
+      $this->assertGreaterThan($testValue, $results->data[0]->meta->id);
+    }
+  }
+
+  public function testGetAllDocumentsWithFilterUsingPostMethod() {
+    $testValue = "100000";
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getDocuments()
+      ->filter(
+        (new Comfortable\Filter)
+          ->addAnd('id', 'greaterThan', $testValue, 'meta')
+      )
+      ->usePostMethod()
       ->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
@@ -132,6 +196,24 @@ class ApiTest extends TestCase {
     $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
   }
 
+  public function testGetAllDocumentsWithIncludeByFieldsUsingPostMethod() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+
+    $results = $api->getDocuments()
+      ->includeByFields(
+        (new Comfortable\Includer)
+          ->add('relatedNews')
+      )
+      ->usePostMethod()
+      ->execute();
+
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+    $this->assertInstanceOf(\stdClass::class, $results->includes, 'includes are missing or there are no relations');
+    $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
+  }
+
   public function testGetAllDocumentsWithIncludeLevel() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
 
@@ -146,10 +228,34 @@ class ApiTest extends TestCase {
     $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
   }
 
+  public function testGetAllDocumentsWithIncludeLevelUsingPostMethod() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+
+    $results = $api->getDocuments()
+      ->includes(2)
+      ->usePostMethod()
+      ->execute();
+
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+    $this->assertInstanceOf(\stdClass::class, $results->includes, 'includes are missing or there are no relations');
+    $this->assertGreaterThanOrEqual(1, sizeof((array)$results->includes), 'there should be at least one related contentType');
+  }
+
   public function testGetAllDocumentsWithSearch() {
     $testValue = "Test";
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
     $results = $api->getDocuments()->search($testValue)->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+  }
+
+  public function testGetAllDocumentsWithSearchUsingPostMethod() {
+    $testValue = "Test";
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getDocuments()->search($testValue)->usePostMethod()->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
@@ -204,9 +310,25 @@ class ApiTest extends TestCase {
     $this->assertInternalType('array', $results->data);
   }
 
+  public function testQueryBuilderGetCollectionUsingPostMethod() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->query('collection', $this->collectionApiId)->usePostMethod()->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+  }
+
   public function testGetCollection() {
     $api = Comfortable\Api::connect($this->repository, $this->apiKey);
     $results = $api->getCollection('post')->execute();
+    $this->assertInstanceOf(\stdClass::class, $results);
+    $this->assertEquals($results->status, 200);
+    $this->assertInternalType('array', $results->data);
+  }
+
+  public function testGetCollectionUsingPostMethod() {
+    $api = Comfortable\Api::connect($this->repository, $this->apiKey);
+    $results = $api->getCollection('post')->usePostMethod()->execute();
     $this->assertInstanceOf(\stdClass::class, $results);
     $this->assertEquals($results->status, 200);
     $this->assertInternalType('array', $results->data);
