@@ -6,10 +6,7 @@ use Comfortable\Sorting;
 
 trait SortingTrait
 {
-    /**
-     * @var array|null $sorting
-     */
-    protected $sorting;
+    protected ?array $sorting = null;
 
     public function sorting(Sorting $sorting): self
     {

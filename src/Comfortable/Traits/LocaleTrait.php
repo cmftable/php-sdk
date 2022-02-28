@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait LocaleTrait
 {
-    /**
-     * @var string|null $locale
-     */
-    protected $locale;
+    protected ?string $locale = null;
 
     public function locale(?string $locale = null): self
     {

@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait SearchTrait
 {
-    /**
-     * @var string|null $search
-     */
-    protected $search;
+    protected ?string $search = null;
 
     public function search(?string $search = null): self
     {

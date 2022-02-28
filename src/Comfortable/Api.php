@@ -21,28 +21,20 @@ class Api
 
     /**
      * comfortable repositoryId
-     *
-     * @var string
      */
-    protected $repository;
+    protected string $repository;
     /**
      * Api key which is used to call the api
-     *
-     * @var string|null
      */
-    protected $apiKey;
+    protected ?string $apiKey;
     /**
      * http client
-     *
-     * @var \GuzzleHttp\Client
      */
-    protected $httpClient;
+    protected Client $httpClient;
     /**
      * repository base endpoint
-     *
-     * @var string $url
      */
-    protected $url;
+    protected string $url;
 
     public function __construct(string $repository, ?string $apiKey = null, ?Client $httpClient = null)
     {
@@ -56,6 +48,9 @@ class Api
 
     /**
      * chose repository
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \JsonException
      */
     public static function connect(string $repository, ?string $apiKey = null, ?Client $httpClient = null): Api
     {
@@ -71,7 +66,7 @@ class Api
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 $responseBody = $e->getResponse()->getBody();
-                $responseBody = json_decode((string)$responseBody, false);
+                $responseBody = json_decode((string)$responseBody, false, 512, JSON_THROW_ON_ERROR);
 
                 switch ($e->getResponse()->getStatusCode()) {
                     case 403:

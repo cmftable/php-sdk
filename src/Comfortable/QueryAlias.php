@@ -13,14 +13,8 @@ class QueryAlias extends AbstractQuery
     use Traits\FieldsTrait;
     use Traits\EmbedAssetsTrait;
 
-    /**
-     * @var string $endpoint
-     */
-    protected $endpoint = 'alias';
-    /**
-     * @var string|null $entityId
-     */
-    protected $entityId;
+    protected string $endpoint = 'alias';
+    protected ?string $entityId;
 
     public function __construct(?string $entityId, $repository, ?Client $httpClient = null)
     {
@@ -31,6 +25,7 @@ class QueryAlias extends AbstractQuery
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \JsonException
      */
     public function execute()
     {
@@ -59,7 +54,7 @@ class QueryAlias extends AbstractQuery
         }
 
         if (count($this->query) > 0) {
-            $query = json_encode($this->query);
+            $query = json_encode($this->query, JSON_THROW_ON_ERROR);
             $queryParameters["query"]["query"] = $query;
         }
 
@@ -73,6 +68,6 @@ class QueryAlias extends AbstractQuery
             throw new RuntimeException($e->getMessage());
         }
 
-        return json_decode($response->getBody()->getContents(), false);
+        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
     }
 }

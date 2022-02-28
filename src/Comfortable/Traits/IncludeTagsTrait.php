@@ -4,10 +4,7 @@ namespace Comfortable\Traits;
 
 trait IncludeTagsTrait
 {
-    /**
-     * @var array $includeTags
-     */
-    protected $includeTags = [];
+    protected array $includeTags = [];
 
     public function includeTags(array $tags): self
     {

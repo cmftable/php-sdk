@@ -4,10 +4,7 @@ namespace Comfortable;
 
 class Sorting
 {
-    /**
-     * @var array $sorting
-     */
-    private $sorting = [];
+    private array $sorting = [];
 
     public function add(string $property, string $direction = 'ASC', string $context = 'fields'): self
     {
