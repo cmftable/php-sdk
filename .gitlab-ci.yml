@@ -2,6 +2,7 @@ image: php:7.0
 
 before_script:
   - apt-get update -yqq
+  - apt-get upgrade -yqq
   - apt-get install zip unzip -yqq
   - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   - php composer-setup.php
