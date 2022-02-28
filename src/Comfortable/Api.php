@@ -3,7 +3,6 @@
 namespace Comfortable;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use RuntimeException;
 
@@ -18,7 +17,7 @@ class Api
     /**
      * v1 api endpoint
      */
-    const API_ENDPOINT = "https://api.cmft.io/v1/";
+    public const API_ENDPOINT = "https://api.cmft.io/v1/";
 
     /**
      * comfortable repositoryId
@@ -45,7 +44,7 @@ class Api
      */
     protected $url;
 
-    public function __construct(string $repository, string $apiKey = null, Client $httpClient = null)
+    public function __construct(string $repository, ?string $apiKey = null, ?Client $httpClient = null)
     {
         $this->repository = $repository;
         $this->apiKey = $apiKey;
@@ -58,7 +57,7 @@ class Api
     /**
      * chose repository
      */
-    public static function connect(string $repository, string $apiKey = null, Client $httpClient = null): Api
+    public static function connect(string $repository, ?string $apiKey = null, ?Client $httpClient = null): Api
     {
         if (is_null($apiKey)) {
             throw new RuntimeException('invalid apiKey');
@@ -85,8 +84,6 @@ class Api
 
                 throw new RuntimeException($error);
             }
-        } catch (GuzzleException $e) {
-            throw new RuntimeException($e->getMessage());
         }
 
         return new Api($repository, $apiKey, $httpClient);
@@ -112,6 +109,8 @@ class Api
      * Query all documents
      *
      * perform query against all documents
+     *
+     * @throws \Exception
      */
     public function getDocuments(): AbstractQuery
     {
@@ -156,9 +155,11 @@ class Api
      *
      * @param string|null $id
      *
+     * @return \Comfortable\AbstractQuery
+     *
      * @throws \Exception
      */
-    public function getDocument(string $id = null): AbstractQuery
+    public function getDocument(?string $id = null): AbstractQuery
     {
         return $this->query('document', $id);
     }
@@ -168,9 +169,11 @@ class Api
      *
      * @param string|null $id
      *
+     * @return \Comfortable\AbstractQuery
+     *
      * @throws \Exception
      */
-    public function getAsset(string $id = null): AbstractQuery
+    public function getAsset(?string $id = null): AbstractQuery
     {
         return $this->query('asset', $id);
     }
@@ -180,9 +183,11 @@ class Api
      *
      * @param string|null $apiId
      *
+     * @return \Comfortable\AbstractQuery
+     *
      * @throws \Exception
      */
-    public function getAlias(string $apiId = null): AbstractQuery
+    public function getAlias(?string $apiId = null): AbstractQuery
     {
         return $this->query('alias', $apiId);
     }
@@ -192,9 +197,11 @@ class Api
      *
      * @param string|null $apiId
      *
+     * @return \Comfortable\AbstractQuery
+     *
      * @throws \Exception
      */
-    public function getCollection(string $apiId = null): AbstractQuery
+    public function getCollection(?string $apiId = null): AbstractQuery
     {
         return $this->query('collection', $apiId);
     }

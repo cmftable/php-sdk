@@ -9,14 +9,14 @@ trait EmbedAssetsTrait
      */
     protected $embedAssets = false;
 
-    public function embedAssets($embedAssets = null): self
+    public function embedAssets(?bool $embedAssets = null): self
     {
         $this->embedAssets = $embedAssets;
 
         return $this;
     }
 
-    public function getEmbedAssets(): bool
+    public function getEmbedAssets(): ?bool
     {
         return $this->embedAssets;
     }

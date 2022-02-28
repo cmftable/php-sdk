@@ -9,14 +9,14 @@ trait FieldsTrait
      */
     protected $fields;
 
-    public function fields($fields = null): self
+    public function fields(?string $fields = null): self
     {
         $this->fields = $fields;
 
         return $this;
     }
 
-    public function getFields()
+    public function getFields(): ?string
     {
         return $this->fields;
     }

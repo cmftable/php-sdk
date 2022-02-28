@@ -11,14 +11,14 @@ trait SortingTrait
      */
     protected $sorting;
 
-    public function sorting(Sorting $sorting):self
+    public function sorting(Sorting $sorting): self
     {
         $this->sorting = $sorting->getSorting();
 
         return $this;
     }
 
-    public function getSorting()
+    public function getSorting(): ?array
     {
         return $this->sorting;
     }

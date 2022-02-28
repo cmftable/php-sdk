@@ -4,7 +4,7 @@ namespace Comfortable;
 
 abstract class AbstractQuery
 {
-    const API_ENDPOINT = "https://api.cmft.io/v1/";
+    public const API_ENDPOINT = "https://api.cmft.io/v1/";
 
     /**
      * @var string $repository
@@ -26,7 +26,7 @@ abstract class AbstractQuery
     /**
      * get Endpoint of specific resource
      */
-    public function getEndpoint(string $entityId = null): string
+    public function getEndpoint(?string $entityId = null): string
     {
         $urlArray = [self::API_ENDPOINT, $this->repository, '/', $this->endpoint, '/'];
 
@@ -42,7 +42,7 @@ abstract class AbstractQuery
      *
      * @return bool|string
      */
-    public function toJson()
+    public function toJson(): ?bool
     {
         return json_encode($this->query);
     }

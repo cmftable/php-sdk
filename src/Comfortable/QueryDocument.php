@@ -26,7 +26,7 @@ class QueryDocument extends AbstractQuery
      */
     protected $entityId;
 
-    public function __construct($entityId, $repository, Client $httpClient = null)
+    public function __construct(?string $entityId, $repository, ?Client $httpClient = null)
     {
         $this->entityId = $entityId;
         $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;

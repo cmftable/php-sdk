@@ -5,18 +5,18 @@ namespace Comfortable\Traits;
 trait OffsetTrait
 {
     /**
-     * @var int $offset
+     * @var int|null $offset
      */
     protected $offset = 0;
 
-    public function offset($offset = null): self
+    public function offset(?int $offset = null): self
     {
         $this->offset = $offset;
 
         return $this;
     }
 
-    public function getOffset(): int
+    public function getOffset(): ?int
     {
         return $this->offset;
     }

@@ -2,11 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="vendor/autoload.php"
          colors="true">
-    <coverage>
-        <include>
-            <directory suffix=".php">./src/Comfortable/</directory>
-        </include>
-    </coverage>
     <testsuites>
         <testsuite name="Comfortable PHP SDK Test Suite">
             <directory suffix="Test.php">./tests/Comfortable</directory>
