@@ -181,7 +181,7 @@ class ApiTest extends TestCase
             ->execute();
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
-        $this->assertInternalType('array', $results->data);
+        $this->assertIsArray($results->data);
         $this->assertGreaterThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
     }
 
