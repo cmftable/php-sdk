@@ -1,4 +1,4 @@
-image: php:7.4
+image: php:8.0
 
 before_script:
   - apt-get update -yqq
@@ -7,9 +7,9 @@ before_script:
   - php composer-setup.php
   - php -r "unlink('composer-setup.php');"
 
-# Run tests with PHP7.4
-test:7.4:
-  image: php:7.4
+# Run tests with PHP8.0
+test:8.0:
+  image: php:8.0
   script:
     - php composer.phar install
     - php vendor/bin/phpunit
