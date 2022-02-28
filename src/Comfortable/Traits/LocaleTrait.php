@@ -9,14 +9,14 @@ trait LocaleTrait
      */
     protected $locale;
 
-    public function locale($locale = null): self
+    public function locale(?string $locale = null): self
     {
         $this->locale = $locale;
 
         return $this;
     }
 
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }

@@ -22,7 +22,7 @@ trait IncludeTrait
         return $this;
     }
 
-    public function includes(int $includeLevel = null): self
+    public function includes(?int $includeLevel = null): self
     {
         $this->includeLevel = $includeLevel;
 
@@ -34,7 +34,7 @@ trait IncludeTrait
         return $this->include;
     }
 
-    public function getIncludeLevel()
+    public function getIncludeLevel(): ?int
     {
         return $this->includeLevel;
     }

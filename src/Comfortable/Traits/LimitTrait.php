@@ -5,18 +5,18 @@ namespace Comfortable\Traits;
 trait LimitTrait
 {
     /**
-     * @var int $limit
+     * @var int|null $limit
      */
     protected $limit = 25;
 
-    public function limit($limit = 25): self
+    public function limit(?int $limit = 25): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    public function getLimit(): int
+    public function getLimit(): ?int
     {
         return $this->limit;
     }

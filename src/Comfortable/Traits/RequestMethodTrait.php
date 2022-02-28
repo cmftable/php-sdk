@@ -9,26 +9,26 @@ trait RequestMethodTrait
      */
     protected $method = 'GET';
 
-    public function usePostMethod():self
+    public function usePostMethod(): self
     {
         $this->method = 'POST';
 
         return $this;
     }
 
-    public function useGetMethod():self
+    public function useGetMethod(): self
     {
         $this->method = 'GET';
 
         return $this;
     }
 
-    public function isGet():bool
+    public function isGet(): bool
     {
         return $this->method === 'GET';
     }
 
-    public function isPost():bool
+    public function isPost(): bool
     {
         return $this->method === 'POST';
     }

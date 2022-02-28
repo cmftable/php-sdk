@@ -38,7 +38,7 @@ class QueryDocuments extends AbstractQuery
      */
     protected $endpoint = 'documents';
 
-    public function __construct($repository, Client $httpClient = null)
+    public function __construct($repository, ?Client $httpClient = null)
     {
         $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;
         $this->repository = $repository;

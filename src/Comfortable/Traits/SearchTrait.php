@@ -9,14 +9,14 @@ trait SearchTrait
      */
     protected $search;
 
-    public function search($search = null): self
+    public function search(?string $search = null): self
     {
         $this->search = $search;
 
         return $this;
     }
 
-    public function getSearch()
+    public function getSearch(): ?string
     {
         return $this->search;
     }
