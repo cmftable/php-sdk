@@ -15,11 +15,11 @@ class QueryAlias extends AbstractQuery {
   use Traits\EmbedAssetsTrait;
 
   protected $endpoint = 'alias';
-  protected $entityId; 
-  
+  protected $entityId;
+
   public function __construct($entityId, $repository, Client $httpClient = null) {
     $this->entityId = $entityId;
-    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;  
+    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;
     $this->repository = $repository;
   }
 

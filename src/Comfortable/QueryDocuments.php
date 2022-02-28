@@ -3,9 +3,7 @@
 namespace Comfortable;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise;
 
 
 class QueryDocuments extends AbstractQuery {
@@ -20,19 +18,16 @@ class QueryDocuments extends AbstractQuery {
   use Traits\ExcludeTagsTrait;
   use Traits\FieldsTrait;
   use Traits\EmbedAssetsTrait;
-  
+  use Traits\RequestMethodTrait;
+
   protected $endpoint = 'documents';
 
   public function __construct($repository, Client $httpClient = null) {
-    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;  
+    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;
     $this->repository = $repository;
   }
 
   public function execute(){
-    $queryParameters = [
-      "query" => []
-    ];
-
     if ($this->getLocale()) {
       $this->query["locale"] = $this->getLocale();
     }
@@ -44,7 +39,7 @@ class QueryDocuments extends AbstractQuery {
     if (is_numeric($this->getOffset())) {
       $this->query["offset"] = $this->getOffset();
     }
-    
+
     if ($this->getSorting()) {
       $this->query["sorting"] = $this->getSorting();
     }
@@ -60,7 +55,7 @@ class QueryDocuments extends AbstractQuery {
     if ($this->getIncludeByFields()) {
       $this->query["includes"] = $this->getIncludeByFields();
     }
-    
+
     if ($this->getSearch()) {
       $this->query["search"] = $this->getSearch();
     }
@@ -81,16 +76,21 @@ class QueryDocuments extends AbstractQuery {
       $this->query["embedAssets"] = $this->getEmbedAssets();
     }
 
-    if (sizeof($this->query) > 0) {
-      $query = json_encode($this->query);
-      $queryParameters["query"]["query"] = $query;
+    $options = [];
+    if ($this->isPost()) {
+      $options['headers'] = ['Content-Type' => 'application/json'];
+      $options["json"] = $this->query;
+    } else {
+      if (sizeof($this->query) > 0) {
+          $options["query"]["query"] = json_encode($this->query);
+      }
     }
 
     try {
       $response = $this->httpClient->request(
-        'GET',
+          $this->getMethod(),
         $this->getEndpoint(),
-        $queryParameters
+        $options
       );
     } catch(RequestException $e) {
       throw new \RuntimeException($e);
