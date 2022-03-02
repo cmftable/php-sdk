@@ -46,13 +46,11 @@ class QueryCollection extends AbstractQuery
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \JsonException
+     *
+     * @return mixed
      */
     public function execute()
     {
-        $queryParameters = [
-            "query" => [],
-        ];
-
         if ($this->getLocale()) {
             $this->query["locale"] = $this->getLocale();
         }
@@ -101,16 +99,21 @@ class QueryCollection extends AbstractQuery
             $this->query["embedAssets"] = $this->getEmbedAssets();
         }
 
-        if (count($this->query) > 0) {
-            $query = json_encode($this->query, JSON_THROW_ON_ERROR);
-            $queryParameters["query"]["query"] = $query;
+        $options = [];
+        $entityId = $this->entityId;
+        if ($this->isPost()) {
+            $options['headers'] = ['Content-Type' => 'application/json'];
+            $options["json"] = $this->query;
+            $entityId .= ($entityId ? '' : '/blogPosts');
+        } elseif (count($this->query) > 0) {
+            $options["query"]["query"] = json_encode($this->query, JSON_THROW_ON_ERROR);
         }
 
         try {
             $response = $this->httpClient->request(
-                'GET',
-                $this->getEndpoint($this->entityId),
-                $queryParameters
+                $this->getMethod(),
+                $this->getEndpoint($entityId),
+                $options
             );
         } catch (RequestException $e) {
             throw new RuntimeException($e->getMessage());
