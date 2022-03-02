@@ -3,9 +3,7 @@
 namespace Comfortable;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise;
 
 
 class QueryCollection extends AbstractQuery {
@@ -20,21 +18,18 @@ class QueryCollection extends AbstractQuery {
   use Traits\ExcludeTagsTrait;
   use Traits\FieldsTrait;
   use Traits\EmbedAssetsTrait;
+  use Traits\RequestMethodTrait;
 
   protected $endpoint = 'collections';
-  protected $entityId; 
-  
+  protected $entityId;
+
   public function __construct($entityId, $repository, Client $httpClient = null) {
     $this->entityId = $entityId;
-    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;  
+    $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;
     $this->repository = $repository;
   }
 
   public function execute(){
-    $queryParameters = [
-      "query" => []
-    ];
-
     if ($this->getLocale()) {
       $this->query["locale"] = $this->getLocale();
     }
@@ -46,7 +41,7 @@ class QueryCollection extends AbstractQuery {
     if (is_numeric($this->getOffset())) {
       $this->query["offset"] = $this->getOffset();
     }
-    
+
     if ($this->getSorting()) {
       $this->query["sorting"] = $this->getSorting();
     }
@@ -62,7 +57,7 @@ class QueryCollection extends AbstractQuery {
     if ($this->getIncludeByFields()) {
       $this->query["includes"] = $this->getIncludeByFields();
     }
-    
+
     if ($this->getSearch()) {
       $this->query["search"] = $this->getSearch();
     }
@@ -83,17 +78,25 @@ class QueryCollection extends AbstractQuery {
       $this->query["embedAssets"] = $this->getEmbedAssets();
     }
 
-    if (sizeof($this->query) > 0) {
-      $query = json_encode($this->query);
-      $queryParameters["query"]["query"] = $query;
+    $options = [];
+    $entityId = $this->entityId;
+    if ($this->isPost()) {
+      $options['headers'] = ['Content-Type' => 'application/json'];
+      $options["json"] = $this->query;
+      $entityId .= ($entityId ? '' : '/blogPosts');
+    } else {
+      if (sizeof($this->query) > 0) {
+        $options["query"]["query"] = json_encode($this->query);
+      }
     }
-    
+
     try {
-      $response = $this->httpClient->request(
-        'GET',
-        $this->getEndpoint($this->entityId),
-        $queryParameters
-      );
+      $response = $this->httpClient
+          ->request(
+              $this->getMethod(),
+              $this->getEndpoint($entityId),
+              $options
+          );
     } catch(RequestException $e) {
       throw new \RuntimeException($e);
     }
