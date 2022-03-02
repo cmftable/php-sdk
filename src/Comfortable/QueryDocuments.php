@@ -2,40 +2,28 @@
 
 namespace Comfortable;
 
-use Comfortable\Traits\EmbedAssetsTrait;
-use Comfortable\Traits\ExcludeTagsTrait;
-use Comfortable\Traits\FieldsTrait;
-use Comfortable\Traits\FilterTrait;
-use Comfortable\Traits\IncludeTagsTrait;
-use Comfortable\Traits\IncludeTrait;
-use Comfortable\Traits\LimitTrait;
-use Comfortable\Traits\LocaleTrait;
-use Comfortable\Traits\OffsetTrait;
-use Comfortable\Traits\RequestMethodTrait;
-use Comfortable\Traits\SearchTrait;
-use Comfortable\Traits\SortingTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use RuntimeException;
 
 class QueryDocuments extends AbstractQuery
 {
-    use LocaleTrait;
-    use LimitTrait;
-    use OffsetTrait;
-    use SortingTrait;
-    use FilterTrait;
-    use IncludeTrait;
-    use SearchTrait;
-    use IncludeTagsTrait;
-    use ExcludeTagsTrait;
-    use FieldsTrait;
-    use EmbedAssetsTrait;
-    use RequestMethodTrait;
+    use Traits\LocaleTrait;
+    use Traits\LimitTrait;
+    use Traits\OffsetTrait;
+    use Traits\SortingTrait;
+    use Traits\FilterTrait;
+    use Traits\IncludeTrait;
+    use Traits\SearchTrait;
+    use Traits\IncludeTagsTrait;
+    use Traits\ExcludeTagsTrait;
+    use Traits\FieldsTrait;
+    use Traits\EmbedAssetsTrait;
+    use Traits\RequestMethodTrait;
 
     protected string $endpoint = 'documents';
 
-    public function __construct($repository, ?Client $httpClient = null)
+    public function __construct($repository, Client $httpClient = null)
     {
         $this->httpClient = is_null($httpClient) ? new Client() : $httpClient;
         $this->repository = $repository;
@@ -47,10 +35,6 @@ class QueryDocuments extends AbstractQuery
      */
     public function execute(): mixed
     {
-        $queryParameters = [
-            "query" => [],
-        ];
-
         if ($this->getLocale()) {
             $this->query["locale"] = $this->getLocale();
         }
@@ -99,16 +83,19 @@ class QueryDocuments extends AbstractQuery
             $this->query["embedAssets"] = $this->getEmbedAssets();
         }
 
-        if (count($this->query) > 0) {
-            $query = json_encode($this->query, JSON_THROW_ON_ERROR);
-            $queryParameters["query"]["query"] = $query;
+        $options = [];
+        if ($this->isPost()) {
+            $options['headers'] = ['Content-Type' => 'application/json'];
+            $options["json"] = $this->query;
+        } elseif (count($this->query) > 0) {
+            $options["query"]["query"] = json_encode($this->query, JSON_THROW_ON_ERROR);
         }
 
         try {
             $response = $this->httpClient->request(
-                'GET',
+                $this->getMethod(),
                 $this->getEndpoint(),
-                $queryParameters
+                $options
             );
         } catch (RequestException $e) {
             throw new RuntimeException($e->getMessage());

@@ -8,30 +8,12 @@ use stdClass;
 
 class ApiTest extends TestCase
 {
-    /**
-     * @var array|false|string $apiKey
-     */
-    protected $apiKey;
-    /**
-     * @var array|false|string $repository
-     */
-    protected $repository;
-    /**
-     * @var array|false|string $documentId
-     */
-    protected $documentId;
-    /**
-     * @var array|false|string $documentAlias
-     */
-    protected $documentAlias;
-    /**
-     * @var array|false|string $assetId
-     */
-    protected $assetId;
-    /**
-     * @var array|false|string $collectionApiId
-     */
-    protected $collectionApiId;
+    protected string|array|false $apiKey;
+    protected string|array|false $repository;
+    protected string|array|false $documentId;
+    protected string|array|false $documentAlias;
+    protected string|array|false $assetId;
+    protected string|array|false $collectionApiId;
 
     protected function setUp(): void
     {
@@ -44,8 +26,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \JsonException
+     * @throws \GuzzleHttp\Exception\GuzzleException|\JsonException
      */
     public function testMissingApiKey(): void
     {
@@ -58,8 +39,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \JsonException
+     * @throws \GuzzleHttp\Exception\GuzzleException|\JsonException
      */
     public function testInvalidApiKeyOrPermission(): void
     {
@@ -72,8 +52,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \JsonException
+     * @throws \GuzzleHttp\Exception\GuzzleException|\JsonException
      */
     public function testValidApiKey(): void
     {
@@ -82,8 +61,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testQueryBuilderExecution(): void
     {
@@ -95,8 +73,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testAllDocumentsWrapper(): void
     {
@@ -108,8 +85,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testAllDocumentsWrapperUsingPostMethod(): void
     {
@@ -121,8 +97,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithLimit(): void
     {
@@ -138,8 +113,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithLimitUsingPostMethod(): void
     {
@@ -155,8 +129,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithOffset(): void
     {
@@ -171,8 +144,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithOffsetUsingPostMethod(): void
     {
@@ -187,8 +159,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithSorting(): void
     {
@@ -206,8 +177,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithSortingUsingPostMethod(): void
     {
@@ -226,8 +196,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithFilter(): void
     {
@@ -248,8 +217,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithFilterUsingPostMethod(): void
     {
@@ -271,8 +239,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithIncludeByFields(): void
     {
@@ -293,8 +260,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithIncludeByFieldsUsingPostMethod(): void
     {
@@ -316,8 +282,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithIncludeLevel(): void
     {
@@ -335,8 +300,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithIncludeLevelUsingPostMethod(): void
     {
@@ -355,8 +319,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithSearch(): void
     {
@@ -369,8 +332,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithSearchUsingPostMethod(): void
     {
@@ -383,7 +345,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithAllLocales(): void
     {
@@ -398,7 +360,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithIncludeTags(): void
     {
@@ -412,7 +374,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithExcludeTags(): void
     {
@@ -426,7 +388,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAllDocumentsWithSpecificFields(): void
     {
@@ -440,7 +402,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testQueryBuilderGetCollection(): void
     {
@@ -452,7 +414,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testQueryBuilderGetCollectionUsingPostMethod(): void
     {
@@ -464,7 +426,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetCollection(): void
     {
@@ -476,7 +438,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetCollectionUsingPostMethod(): void
     {
@@ -488,7 +450,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetDocument(): void
     {
@@ -500,7 +462,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetDocumentWithSpecificFields(): void
     {
@@ -511,7 +473,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetDocumentWithEmbeddedAssets(): void
     {
@@ -522,7 +484,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAlias(): void
     {
@@ -534,7 +496,7 @@ class ApiTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\GuzzleHttp\Exception\GuzzleException
      */
     public function testGetAsset(): void
     {
