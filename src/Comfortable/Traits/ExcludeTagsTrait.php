@@ -2,15 +2,18 @@
 
 namespace Comfortable\Traits;
 
-trait ExcludeTagsTrait {
-  protected $excludeTags;
+trait ExcludeTagsTrait
+{
+    protected $excludeTags;
 
-  public function excludeTags(array $tags) {
-    $this->excludeTags = $tags;
-    return $this;
-  }
+    public function excludeTags(array $tags)
+    {
+        $this->excludeTags = $tags;
+        return $this;
+    }
 
-  public function getExcludeTags() {
-    return $this->excludeTags;
-  }
+    public function getExcludeTags()
+    {
+        return $this->excludeTags;
+    }
 }
