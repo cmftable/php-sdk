@@ -46,13 +46,10 @@ class QueryDocuments extends AbstractQuery
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \JsonException
      */
     public function execute()
     {
-        $queryParameters = [
-            "query" => [],
-        ];
-
         if ($this->getLocale()) {
             $this->query["locale"] = $this->getLocale();
         }
@@ -101,21 +98,24 @@ class QueryDocuments extends AbstractQuery
             $this->query["embedAssets"] = $this->getEmbedAssets();
         }
 
-        if (count($this->query) > 0) {
-            $query = json_encode($this->query);
-            $queryParameters["query"]["query"] = $query;
+        $options = [];
+        if ($this->isPost()) {
+            $options['headers'] = ['Content-Type' => 'application/json'];
+            $options["json"] = $this->query;
+        } elseif (count($this->query) > 0) {
+            $options["query"]["query"] = json_encode($this->query, JSON_THROW_ON_ERROR);
         }
 
         try {
             $response = $this->httpClient->request(
-                'GET',
+                $this->getMethod(),
                 $this->getEndpoint(),
-                $queryParameters
+                $options
             );
-        } catch (RequestException $e) {
-            throw new RuntimeException($e->getMessage());
+        } catch(RequestException $e) {
+            throw new \RuntimeException($e);
         }
 
-        return json_decode($response->getBody()->getContents(), false);
+        return json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
     }
 }
