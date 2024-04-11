@@ -1,4 +1,4 @@
-image: php:8.2
+image: php:8.3
 
 before_script:
   - apt-get update -yqq
@@ -7,9 +7,9 @@ before_script:
   - php composer-setup.php
   - php -r "unlink('composer-setup.php');"
 
-# Run tests with PHP8.2
-test:8.2:
-  image: php:8.2
+# Run tests with PHP8.3
+test:8.3:
+  image: php:8.3
   script:
     - php composer.phar install
     - php vendor/bin/phpunit
