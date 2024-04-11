@@ -173,7 +173,7 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
         $this->assertIsArray($results->data);
-        $this->assertGreaterThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
+        $this->assertLessThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
     }
 
     /**
@@ -192,7 +192,7 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $results);
         $this->assertEquals(200, $results->status);
         $this->assertIsArray($results->data);
-        $this->assertGreaterThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
+        $this->assertLessThanOrEqual($results->data[0]->meta->id, $results->data[1]->meta->id);
     }
 
     /**
